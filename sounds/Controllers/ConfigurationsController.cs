@@ -148,7 +148,7 @@ namespace WhatsApp_Api.Controllers
                                     await _whatsappCloudSendMessage.Execute(objectMessage, userNumber);
                                 }
                             }
-                            //Registrar Apellido P
+                            //Registrar Apellido Paterno
                             else if (userState == 4)
                             {
                                 if (Body != null)
