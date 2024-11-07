@@ -29,9 +29,13 @@ namespace API_SISDE.Services.WhatsappCloud.SendMessage
             try
             {
                 var jsonModel = JsonConvert.SerializeObject(model);
-
+                //PRUEBAS
                 string phoneNumberId = "392617457271128";
                 string accessToken = "EAAGnXYHcJ1MBO50tZCTGuJnke8LWaQSkKKVmFJBa9ozHpiysS4751cqwfwU0aJKq9lisg5AxD1ZBMzf0KNlN9kpxZCASwbqJxyl2nS8yFZCgi6JDnT74AJFRhC9VQmvZCuEV7Y58MFq7ELzpcRIZBoBDKr00bMp0BAtxnZCJF9DaGbjrh6TNwn8AtmCQzDJJLtl";
+
+                //PRODUCTIVO
+                //string phoneNumberId = "378445068691241";
+                //string accessToken = "EAAMHjZCMOxp0BO6tLMyOVjCyPDpuo5BxZAiBTs6W2MAjI8r6giguzfn7KvTLnC6Dgzjpf6a1PUj4ECEydwtUALfViw7IQtqK4jSxZAXbSmzalr2wKV36GaXLPyvQTLvBwPAJN6ZBh9kTDtCtyuO5i8fQCbq65Cy4PvHfk1C0TTeNDhTgwOyAgor7SshZA55et";
 
                 System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
@@ -87,79 +91,6 @@ namespace API_SISDE.Services.WhatsappCloud.SendMessage
                 return false;
             }
         }
-        //public async Task<bool> Execute(object model, string number)
-        //{
-        //    try
-        //    {
-
-        //        var jsonModel = JsonConvert.SerializeObject(model);
-
-        //        string phoneNumberId = "392617457271128";
-        //        string accessToken = "EAAGnXYHcJ1MBO50tZCTGuJnke8LWaQSkKKVmFJBa9ozHpiysS4751cqwfwU0aJKq9lisg5AxD1ZBMzf0KNlN9kpxZCASwbqJxyl2nS8yFZCgi6JDnT74AJFRhC9VQmvZCuEV7Y58MFq7ELzpcRIZBoBDKr00bMp0BAtxnZCJF9DaGbjrh6TNwn8AtmCQzDJJLtl";
-
-
-        //        System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-
-
-        //        string url = $"https://graph.facebook.com/v21.0/{phoneNumberId}/messages";
-
-        //        // Crear el WebRequest
-        //        WebRequest request = WebRequest.Create(url);
-        //        request.Method = "POST";
-        //        request.ContentType = "application/json";
-        //        request.Headers["Authorization"] = "Bearer " + accessToken;
-
-        //        // Convertir el modelo JSON en bytes y enviarlo en el cuerpo de la solicitud
-        //        byte[] byteArray = Encoding.UTF8.GetBytes(jsonModel);
-        //        using (Stream dataStream = await request.GetRequestStreamAsync())
-        //        {
-        //            dataStream.Write(byteArray, 0, byteArray.Length);
-        //        }
-
-        //        // Obtener la respuesta
-        //        WebResponse response = await request.GetResponseAsync();
-        //        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-        //        {
-        //            string responseFromServer = await reader.ReadToEndAsync();
-        //            if (!string.IsNullOrEmpty(responseFromServer))
-        //            {
-        //                return true; // Mensaje enviado con éxito
-        //            }
-        //        }
-
-        //        return true; // Si todo va bien, devolver true
-        //    }
-        //    catch (WebException ex)
-        //    {
-        //        // Manejo de errores en la solicitud
-        //        using (var errorResponse = (HttpWebResponse)ex.Response)
-        //        {
-        //            using (var reader = new StreamReader(errorResponse.GetResponseStream()))
-        //            {
-        //                var errorText = await reader.ReadToEndAsync();
-        //                Log("Error en la solicitud POST", this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, errorText + "-" + number, 0);
-
-        //                // Manejo específico para el límite de tasa alcanzado
-        //                if (errorText.Contains("rate limit hit"))
-        //                {
-        //                    Log("Límite de tasa alcanzado, reintentando...", this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, number, 0);
-        //                    await Task.Delay(10000); // Esperar 10 segundos antes de reintentar
-        //                    await Execute(model, number); // Reintentar
-        //                }
-        //            }
-        //        }
-        //        return false;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var line = GetLineNumber(ex);
-        //        Log("Error inesperado", this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, ex.Message + "-" + number, line);
-        //        return false;
-        //    }
-        //}
-
-
-
 
         public long GetLineNumber(Exception ex)
         {

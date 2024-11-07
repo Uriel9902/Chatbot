@@ -622,10 +622,7 @@ namespace API_SISDE.Models.Connection
                 {
                     ap = aparatologia.Clave;
                 }
-                //foreach (var aparatologia in DB.Aparatologia.Where(x => x.Clave == id_service).ToList())
-                //{
-                //    ap = aparatologia.Clave;
-                //}
+               
             }
             catch (Exception ex)
             {
@@ -1187,7 +1184,6 @@ namespace API_SISDE.Models.Connection
 
         public async Task<string> MessageServices(string idServicio)
         {
-
             try
             {
                 var message = await DB.Mensajes.AsNoTracking().Where(x => x.Nombre == idServicio).FirstOrDefaultAsync();

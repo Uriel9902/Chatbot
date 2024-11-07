@@ -2,7 +2,10 @@
 using API_SISDE.Models.Connection;
 using API_SISDE.Models.WhatsappCloud;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
+using System.Numerics;
+using System.Text.RegularExpressions;
 using System.Xml.Schema;
 using static System.Net.WebRequestMethods;
 
@@ -12,6 +15,11 @@ namespace API_SISDE.Util
     {
         CHATPRContext DB = new CHATPRContext();
         QueryModelsEntity queryModels = new QueryModelsEntity();
+        // Definir HttpClient como estática para su reutilización
+        private static readonly HttpClient req = new HttpClient
+        {
+            BaseAddress = new Uri("http://172.16.71.11") // Establecer la URL base para evitar repetirla
+        };
         public async Task<object> TextMessage(string message, string number)
         {
             var messageContent = new
@@ -663,7 +671,7 @@ namespace API_SISDE.Util
             throw new NotImplementedException();
         }
 
-       public async Task<object> ButtonValidateData(string number)
+        public async Task<object> ButtonValidateData(string number)
         {
             string data = await queryModels.ValidateData(number);
 
@@ -1199,7 +1207,7 @@ namespace API_SISDE.Util
         {
             var Content = await queryModels.MessageServices(id_service);
 
-            //queryModels.StepsServiceConsultations(id_service, number).ToString();
+
             if (Content == "") Content = "Preguntas";
 
             var isSubTraitmentF = await DB.Faciales.Where(x => x.Clave == id_service).FirstOrDefaultAsync();
@@ -1208,7 +1216,37 @@ namespace API_SISDE.Util
             var serviceContet = await queryModels.QueryGetservice();
             string name = "Servicios";
 
-            // var serviceContet = new object { };
+
+            if (id_service == "01C")
+            {
+                var id = await DB.Usuarios.AsNoTracking().Where(x => x.Numero == number && x.Pvte == true).FirstOrDefaultAsync();
+                if (id != null && id.IdSucursal != null)
+                {
+                    // Extraer el número de la sucursal
+                    string a = Regex.Match(id.IdSucursal, @"\d+").Value;
+
+                    // Realizar la solicitud HTTP con la URL base ya configurada
+                    var response = await req.GetAsync($"/Bot/GetPriceConsultation?id_shope={a}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonString = await response.Content.ReadAsStringAsync();
+                        var prices = JsonConvert.DeserializeObject<List<Prices>>(jsonString);
+
+                        // Filtrar los precios solo una vez
+                        var precioNormal = prices.FirstOrDefault(x => x.nombre == "NORMAL");
+                        var precioFestivo = prices.FirstOrDefault(x => x.nombre == "FESTIVO");
+
+                        // Reemplazar contenido en la plantilla
+                        Content = Content.Replace("*precio*",
+                            $"\n$ {precioNormal?.precio} {precioNormal?.nombre}" +
+                            $"\n$ {precioFestivo?.precio} {precioFestivo?.nombre}");
+                    }
+                   
+
+                }
+
+            }
 
             if (id_service == "04AP" || isSubTraitmentA != null)
             {

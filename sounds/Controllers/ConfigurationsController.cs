@@ -52,7 +52,10 @@ namespace WhatsApp_Api.Controllers
         [HttpGet]
         public IActionResult VerifyToken()
         {
+            //PRUEBAS
             string AccessToken = "jJMiusmOTRYV3eUB77qJffRcxw7crCuIxYRT9Hcf4EBTz1BgHhQLCciLlKiWJST1";
+          //PRODUCTIVO
+           // string AccessToken = "0630";
             var token = Request.Query["hub.verify_token"].ToString();
             var challenge = Request.Query["hub.challenge"].ToString();
             if (challenge != null && token != null && token == AccessToken)
