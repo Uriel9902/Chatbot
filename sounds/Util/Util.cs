@@ -1314,11 +1314,6 @@ namespace API_SISDE.Util
         public async Task<object> LocationMessage(string number, string id_suc)
         {
 
-
-            //List<Location> locations = new List<Location>();
-
-
-            //var res = queryModels.GetlocationShope(shope);
             var res = await DB.Sucursales.Where(x => x.Clave == id_suc).FirstOrDefaultAsync();
 
 
@@ -1394,46 +1389,46 @@ namespace API_SISDE.Util
         }
 
 
-        object Shopes(string number)
-        {
-            return new
-            {
-                messaging_product = "whatsapp",
-                recipient_type = "individual",
-                to = number,
-                type = "interactive",
-                interactive = new
-                {
-                    type = "button",
-                    body = new
-                    {
-                        text = "<BUTTON_TEXT>"
-                    },
-                    action = new
-                    {
-                        buttons = new List<object>
-            {
-                new {
-                    type= "reply",
-                    reply= new {
-                        id= "<UNIQUE_BUTTON_ID_1>",
-                        title= "<BUTTON_TITLE_1>"
-                    }
-                },
-                new {
-                    type= "reply",
-                    reply= new {
-                        id= "<UNIQUE_BUTTON_ID_2>",
-                        title= "<BUTTON_TITLE_2>"
-                    }
-                }
-            }
-                    }
-                }
-            };
+        //public async Task<object> DatePicker(string number)
+        //{
+        //    return new
+        //    {
+        //        messaging_product = "whatsapp",
+        //        recipient_type = "individual",
+        //        to = number,
+        //        type = "interactive",
+        //        interactive = new
+        //        {
+        //            type = "button",
+        //            body = new
+        //            {
+        //                text = "<BUTTON_TEXT>"
+        //            },
+        //            action = new
+        //            {
+        //                buttons = new List<object>
+        //    {
+        //        new {
+        //            type= "reply",
+        //            reply= new {
+        //                id= "<UNIQUE_BUTTON_ID_1>",
+        //                title= "<BUTTON_TITLE_1>"
+        //            }
+        //        },
+        //        new {
+        //            type= "reply",
+        //            reply= new {
+        //                id= "<UNIQUE_BUTTON_ID_2>",
+        //                title= "<BUTTON_TITLE_2>"
+        //            }
+        //        }
+        //    }
+        //            }
+        //        }
+        //    };
 
 
-        }
+        //}
     }
 
 }
