@@ -1,17 +1,10 @@
 ﻿using API_SISDE.Data;
 using API_SISDE.Models.WhatsappCloud;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System;
 using System.Globalization;
 using System.Net;
-using System.Reflection.PortableExecutable;
-using System.Runtime.Intrinsics.X86;
 using System.Text;
-using System.Xml.Linq;
 
 namespace API_SISDE.Models.Connection
 {
@@ -622,7 +615,7 @@ namespace API_SISDE.Models.Connection
                 {
                     ap = aparatologia.Clave;
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -1012,7 +1005,7 @@ namespace API_SISDE.Models.Connection
 
 
 
-                                       
+
                                     }
 
                                 }
@@ -1470,7 +1463,7 @@ namespace API_SISDE.Models.Connection
 
             try
             {
-                var Message = await DB.Mensajes.AsNoTracking().Where(x=>x.Id==42).FirstOrDefaultAsync();
+                var Message = await DB.Mensajes.AsNoTracking().Where(x => x.Id == 42).FirstOrDefaultAsync();
                 var User = await DB.Usuarios.AsNoTracking().Where(x => x.Numero == number && x.Pvte == true).FirstOrDefaultAsync();
                 if (Message != null && User != null)
                 {
@@ -1487,7 +1480,7 @@ namespace API_SISDE.Models.Connection
                     .Replace(" service", " " + Service);
                     Datos = message ?? "";
                 }
-               
+
             }
             catch (Exception)
             {
@@ -1512,7 +1505,7 @@ namespace API_SISDE.Models.Connection
                 throw;
             }
 
-        }  
+        }
         public async Task<string> QueryGetService(string number)
         {
             try
@@ -2062,6 +2055,20 @@ namespace API_SISDE.Models.Connection
                 throw;
             }
             return Datos;
+
+        }
+
+        public async Task<string> checkPendingAppoiment(string userNumber)
+        {
+            var user = await DB.Usuarios.Where(x => x.Numero == userNumber && x.Pvte == true).FirstOrDefaultAsync();
+            if (user != null)
+            {
+                var servicePending = await DB.Usuarios.Where(x => x.Numero == userNumber 
+                && x.Pvte == false && x.Fam == user.Fam && x.Servicio == user.Servicio && x.IdEstatus == 2).FirstOrDefaultAsync();
+                if (servicePending != null) return servicePending.Nombre + " " + servicePending.ApPaterno + " " + servicePending.ApMaterno;
+                else return "";
+            }
+            else return "";
 
         }
 
