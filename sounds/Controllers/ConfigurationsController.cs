@@ -55,7 +55,7 @@ namespace WhatsApp_Api.Controllers
             //PRUEBAS
             string AccessToken = "jJMiusmOTRYV3eUB77qJffRcxw7crCuIxYRT9Hcf4EBTz1BgHhQLCciLlKiWJST1";
             //PRODUCTIVO
-           //  string AccessToken = "0630";
+            //  string AccessToken = "0630";
             var token = Request.Query["hub.verify_token"].ToString();
             var challenge = Request.Query["hub.challenge"].ToString();
             if (challenge != null && token != null && token == AccessToken)
@@ -280,7 +280,6 @@ namespace WhatsApp_Api.Controllers
 
 
                             }
-
                             //Editar Datos
                             else if (userState == 10)
                             {
@@ -311,7 +310,6 @@ namespace WhatsApp_Api.Controllers
 
 
                             }
-
                             //Editar Nombre
                             else if (userState == 11)
                             {
@@ -467,9 +465,6 @@ namespace WhatsApp_Api.Controllers
 
 
                             }
-
-
-
                             else
                             {
                                 objectMessage = _util.TextMessage(Saludo?.Descripcion ?? "No puedo entenderte", userNumber);
@@ -893,7 +888,7 @@ namespace WhatsApp_Api.Controllers
             try
             {
                 if (await QueryModelsEntity.checkPendingAppoiment(userNumber) == "") await QueryModelsEntity.insertNewService(userNumber);
-                else 
+                else
                 {
                     var Name = await cHATPR.Mensajes.AsNoTracking().Where(x => x.Id == 44).FirstOrDefaultAsync();
                     var NameF = Name?.Descripcion?.Replace("*nombre*", await QueryModelsEntity.checkPendingAppoiment(userNumber));

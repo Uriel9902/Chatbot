@@ -1,23 +1,15 @@
 ﻿
 using API_SISDE.Data;
 using API_SISDE.Models.Connection;
-using Grpc.Core;
 using Newtonsoft.Json;
-using Polly;
-using RestSharp;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Net.NetworkInformation;
-using System.Diagnostics;
-using System.Globalization;
-using Newtonsoft.Json.Linq;
 
 namespace API_SISDE.Services.WhatsappCloud.SendMessage
 {
     public class WhatsappCloudSendMessage : IWhatsappCloudSendMessage
     {
-
         private static readonly HttpClient _httpClient = new HttpClient
         {
             BaseAddress = new Uri("https://graph.facebook.com/"),
@@ -31,7 +23,7 @@ namespace API_SISDE.Services.WhatsappCloud.SendMessage
                 var jsonModel = JsonConvert.SerializeObject(model);
                 //PRUEBAS
                 string phoneNumberId = "392617457271128";
-                string accessToken = "EAAGnXYHcJ1MBO50tZCTGuJnke8LWaQSkKKVmFJBa9ozHpiysS4751cqwfwU0aJKq9lisg5AxD1ZBMzf0KNlN9kpxZCASwbqJxyl2nS8yFZCgi6JDnT74AJFRhC9VQmvZCuEV7Y58MFq7ELzpcRIZBoBDKr00bMp0BAtxnZCJF9DaGbjrh6TNwn8AtmCQzDJJLtl";
+                string accessToken = "EAAGnXYHcJ1MBO2F26k7ObbRBwKVCz8c36B70UGliCZAcJKVVjRtfWSNU2Ad3xV8frsIBMOYjIB0ZBiUyaZAmb5CMEWA98EXlt5dI3TTsNJf5c93eEbUuqlqeiZCDv8f1ZClxtQQO05HwfmMZAvFQ2yyXjZA8jernRw0JFvcEjcbyk2wQEHAufETBUgmofGF5MeTHtibFYhhCa3fY0hawo8AiEiEDJIZD";
 
                 //PRODUCTIVO
                 //string phoneNumberId = "378445068691241";
@@ -121,10 +113,5 @@ namespace API_SISDE.Services.WhatsappCloud.SendMessage
             await DB.Logs.AddAsync(logs);
             await DB.SaveChangesAsync();
         }
-
-
-
-
-
     }
 }
